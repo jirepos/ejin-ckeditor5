@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor 5 – classic editor build – development sample</title>
+	<style>
+		body {
+			max-width: 800px;
+			margin: 20px auto;
+		}
+
+		/* .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+			border: 0px !important;
+		} */
+	</style>
+</head>
+
+<body>
+
+	<h1>CKEditor 5 – classic editor build – development sample</h1>
+
+	<div id="editor">
+		
+	</div>
+
+	<script src="../build/ckeditor.js"></script>
+	<script src="./uploader.js"></script>
+	<script>
+		ClassicEditor.create(document.querySelector('#editor'),
+			{
+				ckfinder: {
+					uploadUrl: 'http://localhost/tutorial/file/image-upload'
+				}
+			}
+		)
+			.then(editor => {
+				
+				window.editor = editor;
+				editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+           return new MyUploadAdapter( loader );
+        };
+				// const toolbarElement = editor.ui.view.toolbar.element;
+				// toolbarElement.style.display = 'none';
+				// editor.enableReadOnlyMode('my-feature-id');
+			})
+			.catch(error => {
+				console.error('There was a problem initializing the editor.', error);
+			});
+	</script>
+
+</body>
+
+</html>
